@@ -1,0 +1,927 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sweet Bliss | Macarons • Cookies • Donuts</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #fffaf8;
+            color: #3a2525;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(255, 250, 248, 0.96);
+            box-shadow: 0 3px 20px rgba(70, 30, 30, 0.08);
+        }
+
+        nav {
+            max-width: 1250px;
+            margin: auto;
+            padding: 17px 25px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: #d94f70;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: #8c5a44;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #3a2525;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        nav a:hover {
+            color: #d94f70;
+        }
+
+        .cart {
+            background: #d94f70;
+            color: white !important;
+            padding: 10px 18px;
+            border-radius: 25px;
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 140px 8% 80px;
+            color: white;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(35, 12, 15, 0.72),
+                    rgba(35, 12, 15, 0.18)
+                ),
+                url("https://images.unsplash.com/photo-1551024506-0bccd828d307?auto=format&fit=crop&w=2200&q=95")
+                center/cover no-repeat;
+        }
+
+        .hero-content {
+            max-width: 700px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 9px 18px;
+            background: rgba(255,255,255,0.18);
+            border: 1px solid rgba(255,255,255,0.4);
+            border-radius: 30px;
+            margin-bottom: 20px;
+            backdrop-filter: blur(8px);
+        }
+
+        .hero h1 {
+            font-family: Georgia, serif;
+            font-size: clamp(50px, 7vw, 88px);
+            line-height: 0.98;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 span {
+            color: #ffd2dc;
+        }
+
+        .hero p {
+            font-size: 20px;
+            line-height: 1.7;
+            margin-bottom: 35px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 28px;
+            border-radius: 35px;
+            text-decoration: none;
+            font-weight: 700;
+            margin-right: 10px;
+            transition: 0.3s;
+        }
+
+        .btn-primary {
+            background: #d94f70;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            background: #bd3d5c;
+        }
+
+        .btn-light {
+            background: white;
+            color: #573232;
+        }
+
+        /* GENERAL */
+
+        section {
+            padding: 95px 7%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 55px;
+        }
+
+        .section-title small {
+            color: #d94f70;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .section-title h2 {
+            font-family: Georgia, serif;
+            font-size: 48px;
+            margin: 10px 0;
+        }
+
+        .section-title p {
+            color: #806c6c;
+        }
+
+        /* CATEGORIES */
+
+        .categories {
+            max-width: 1250px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+        }
+
+        .category {
+            position: relative;
+            height: 430px;
+            overflow: hidden;
+            border-radius: 25px;
+        }
+
+        .category img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: 0.6s;
+        }
+
+        .category:hover img {
+            transform: scale(1.08);
+        }
+
+        .category-content {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            padding: 35px 25px;
+            color: white;
+            background: linear-gradient(transparent, rgba(30,10,10,0.9));
+        }
+
+        .category-content h3 {
+            font-family: Georgia, serif;
+            font-size: 34px;
+        }
+
+        .category-content p {
+            margin-top: 5px;
+        }
+
+        /* PRODUCTS */
+
+        .products {
+            background: #fff1f3;
+        }
+
+        .product-grid {
+            max-width: 1250px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 22px;
+        }
+
+        .product {
+            background: white;
+            border-radius: 22px;
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(80,30,30,0.09);
+            transition: 0.3s;
+        }
+
+        .product:hover {
+            transform: translateY(-8px);
+        }
+
+        .product-image {
+            position: relative;
+        }
+
+        .product-image img {
+            width: 100%;
+            height: 260px;
+            object-fit: cover;
+        }
+
+        .badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: #d94f70;
+            color: white;
+            padding: 7px 13px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .product-info {
+            padding: 22px;
+        }
+
+        .product-info h3 {
+            font-family: Georgia, serif;
+            font-size: 22px;
+            margin-bottom: 7px;
+        }
+
+        .stars {
+            color: #f5a623;
+            margin-bottom: 12px;
+        }
+
+        .price {
+            font-size: 20px;
+            font-weight: 800;
+            color: #d94f70;
+        }
+
+        /* STORY */
+
+        .story {
+            max-width: 1250px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .story-image img {
+            width: 100%;
+            height: 520px;
+            object-fit: cover;
+            border-radius: 30px;
+        }
+
+        .story-text small {
+            color: #d94f70;
+            font-weight: bold;
+            letter-spacing: 3px;
+        }
+
+        .story-text h2 {
+            font-family: Georgia, serif;
+            font-size: 48px;
+            margin: 15px 0 20px;
+        }
+
+        .story-text p {
+            color: #715f5f;
+            margin-bottom: 18px;
+            font-size: 17px;
+        }
+
+        /* INSTAGRAM STYLE GALLERY */
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 10px;
+        }
+
+        .gallery img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            transition: 0.4s;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.03);
+            opacity: 0.85;
+        }
+
+        /* NEWSLETTER */
+
+        .newsletter {
+            text-align: center;
+            color: white;
+
+            background:
+                linear-gradient(
+                    rgba(55, 20, 25, 0.75),
+                    rgba(55, 20, 25, 0.75)
+                ),
+                url("https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=2200&q=95")
+                center/cover;
+        }
+
+        .newsletter h2 {
+            font-family: Georgia, serif;
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .newsletter p {
+            margin-bottom: 30px;
+        }
+
+        .email-box {
+            display: flex;
+            max-width: 550px;
+            margin: auto;
+            background: white;
+            padding: 7px;
+            border-radius: 40px;
+        }
+
+        .email-box input {
+            flex: 1;
+            border: none;
+            outline: none;
+            padding: 14px 20px;
+            border-radius: 30px;
+            font-size: 15px;
+        }
+
+        .email-box button {
+            border: none;
+            background: #d94f70;
+            color: white;
+            padding: 14px 25px;
+            border-radius: 30px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: #241416;
+            color: white;
+            padding: 55px 7% 25px;
+        }
+
+        .footer-grid {
+            max-width: 1200px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+        }
+
+        footer h3 {
+            color: #ffd0da;
+            margin-bottom: 15px;
+        }
+
+        footer p,
+        footer li {
+            color: #c9b9b9;
+            margin-bottom: 8px;
+        }
+
+        footer ul {
+            list-style: none;
+        }
+
+        footer a {
+            color: #c9b9b9;
+            text-decoration: none;
+        }
+
+        .copyright {
+            max-width: 1200px;
+            margin: 40px auto 0;
+            padding-top: 20px;
+            border-top: 1px solid #493739;
+            text-align: center;
+            color: #a99898;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 1000px) {
+            nav ul {
+                display: none;
+            }
+
+            .categories {
+                grid-template-columns: 1fr;
+            }
+
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .gallery {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .story {
+                grid-template-columns: 1fr;
+            }
+
+            .product-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .gallery {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero h1 {
+                font-size: 50px;
+            }
+
+            .section-title h2,
+            .story-text h2,
+            .newsletter h2 {
+                font-size: 38px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<header>
+    <nav>
+        <div class="logo">Sweet<span>Bliss</span> 🍩</div>
+
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#shop">Shop</a></li>
+            <li><a href="#story">Our Story</a></li>
+            <li><a href="#gallery">Gallery</a></li>
+            <li><a href="#contact" class="cart">🛒 Order Now</a></li>
+        </ul>
+    </nav>
+</header>
+
+
+<!-- HERO -->
+<section class="hero" id="home">
+
+    <div class="hero-content">
+
+        <div class="tag">✨ Freshly Baked Every Day</div>
+
+        <h1>
+            Happiness<br>
+            <span>In Every Bite.</span>
+        </h1>
+
+        <p>
+            Discover handcrafted macarons, irresistible cookies and
+            dreamy donuts made with premium ingredients and lots of love.
+        </p>
+
+        <a href="#shop" class="btn btn-primary">Shop Our Treats</a>
+        <a href="#story" class="btn btn-light">Discover Our Story</a>
+
+    </div>
+
+</section>
+
+
+<!-- CATEGORIES -->
+<section>
+
+    <div class="section-title">
+        <small>Our Specialties</small>
+        <h2>Pick Your Sweet Moment</h2>
+        <p>Beautifully crafted treats made to brighten your day.</p>
+    </div>
+
+    <div class="categories">
+
+        <div class="category">
+
+            <img
+                src="https://images.unsplash.com/photo-1571506165871-ee72a35bc9d4?auto=format&fit=crop&w=1800&q=95"
+                alt="Colorful macarons">
+
+            <div class="category-content">
+                <h3>Macarons</h3>
+                <p>Delicate, colorful & irresistibly French.</p>
+            </div>
+
+        </div>
+
+
+        <div class="category">
+
+            <img
+                src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1800&q=95"
+                alt="Chocolate chip cookies">
+
+            <div class="category-content">
+                <h3>Cookies</h3>
+                <p>Crispy edges, soft centers & pure joy.</p>
+            </div>
+
+        </div>
+
+
+        <div class="category">
+
+            <img
+                src="https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=1800&q=95"
+                alt="Glazed donuts">
+
+            <div class="category-content">
+                <h3>Donuts</h3>
+                <p>Fluffy, glazed & made for cravings.</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- PRODUCTS -->
+<section class="products" id="shop">
+
+    <div class="section-title">
+        <small>Trending Now</small>
+        <h2>Sweetest Bestsellers</h2>
+        <p>The treats everyone is talking about right now.</p>
+    </div>
+
+    <div class="product-grid">
+
+
+        <div class="product">
+
+            <div class="product-image">
+
+                <span class="badge">BESTSELLER</span>
+
+                <img
+                    src="https://images.unsplash.com/photo-1571506165871-ee72a35bc9d4?auto=format&fit=crop&w=1500&q=95"
+                    alt="Pink macarons">
+
+            </div>
+
+            <div class="product-info">
+
+                <h3>Pink Dream Macarons</h3>
+
+                <div class="stars">★★★★★</div>
+
+                <p>Raspberry & vanilla buttercream.</p>
+
+                <br>
+
+                <div class="price">₹499 / Box</div>
+
+            </div>
+
+        </div>
+
+
+        <div class="product">
+
+            <div class="product-image">
+
+                <span class="badge">TRENDING</span>
+
+                <img
+                    src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1500&q=95"
+                    alt="Chocolate chip cookie">
+
+            </div>
+
+            <div class="product-info">
+
+                <h3>Classic Choco Chip</h3>
+
+                <div class="stars">★★★★★</div>
+
+                <p>Loaded with Belgian chocolate.</p>
+
+                <br>
+
+                <div class="price">₹299 / Box</div>
+
+            </div>
+
+        </div>
+
+
+        <div class="product">
+
+            <div class="product-image">
+
+                <span class="badge">NEW</span>
+
+                <img
+                    src="https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=1500&q=95"
+                    alt="Chocolate glazed donut">
+
+            </div>
+
+            <div class="product-info">
+
+                <h3>Chocolate Dream Donuts</h3>
+
+                <div class="stars">★★★★★</div>
+
+                <p>Soft donuts with rich chocolate glaze.</p>
+
+                <br>
+
+                <div class="price">₹349 / Box</div>
+
+            </div>
+
+        </div>
+
+
+        <div class="product">
+
+            <div class="product-image">
+
+                <span class="badge">POPULAR</span>
+
+                <img
+                    src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=1500&q=95"
+                    alt="Fresh bakery cookies">
+
+            </div>
+
+            <div class="product-info">
+
+                <h3>Luxury Cookie Box</h3>
+
+                <div class="stars">★★★★★</div>
+
+                <p>Six premium flavors in one box.</p>
+
+                <br>
+
+                <div class="price">₹599 / Box</div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- STORY -->
+<section id="story">
+
+    <div class="story">
+
+        <div class="story-image">
+
+            <img
+                src="https://images.unsplash.com/photo-1559622214-f8a9850965bb?auto=format&fit=crop&w=1800&q=95"
+                alt="Beautiful bakery treats">
+
+        </div>
+
+        <div class="story-text">
+
+            <small>OUR STORY</small>
+
+            <h2>Baked With Love. Served With Joy.</h2>
+
+            <p>
+                Sweet Bliss started with a simple dream — to create desserts
+                that look beautiful, taste unforgettable and make ordinary
+                moments feel special.
+            </p>
+
+            <p>
+                Every macaron is carefully crafted, every cookie is baked
+                fresh and every donut is finished by hand.
+            </p>
+
+            <p>
+                From birthday celebrations to late-night cravings,
+                we're here to make your sweetest moments even sweeter.
+            </p>
+
+            <a href="#contact" class="btn btn-primary">Order Your Favorites</a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- GALLERY -->
+<section id="gallery">
+
+    <div class="section-title">
+        <small>#SweetBliss</small>
+        <h2>Made for Your Feed</h2>
+        <p>Sweet treats, beautiful moments and lots of happiness.</p>
+    </div>
+
+    <div class="gallery">
+
+        <img src="https://images.unsplash.com/photo-1571506165871-ee72a35bc9d4?auto=format&fit=crop&w=1200&q=95" alt="Macarons">
+
+        <img src="https://images.unsplash.com/photo-1499636136210-6f4ee915583e?auto=format&fit=crop&w=1200&q=95" alt="Cookies">
+
+        <img src="https://images.unsplash.com/photo-1551024601-bec78aea704b?auto=format&fit=crop&w=1200&q=95" alt="Donuts">
+
+        <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=1200&q=95" alt="Fresh cookies">
+
+        <img src="https://images.unsplash.com/photo-1559622214-f8a9850965bb?auto=format&fit=crop&w=1200&q=95" alt="Bakery">
+
+    </div>
+
+</section>
+
+
+<!-- NEWSLETTER -->
+<section class="newsletter">
+
+    <h2>Get Something Sweet</h2>
+
+    <p>
+        Join our sweet community and get new flavor drops,
+        special offers and delicious updates.
+    </p>
+
+    <div class="email-box">
+
+        <input
+            type="email"
+            placeholder="Enter your email address">
+
+        <button>Subscribe</button>
+
+    </div>
+
+</section>
+
+
+<!-- CONTACT -->
+<section id="contact">
+
+    <div class="section-title">
+
+        <small>Visit Us</small>
+
+        <h2>Come Say Hello</h2>
+
+        <p>Fresh treats are waiting for you.</p>
+
+    </div>
+
+    <div style="
+        max-width:900px;
+        margin:auto;
+        text-align:center;
+        background:#fff1f3;
+        padding:45px;
+        border-radius:25px;
+    ">
+
+        <h2>🍩 Sweet Bliss Bakery</h2>
+
+        <p>📍 123 Sweet Street, Pune, Maharashtra</p>
+
+        <p>📞 +91 98765 43210</p>
+
+        <p>✉️ hello@sweetbliss.com</p>
+
+        <br>
+
+        <a href="mailto:hello@sweetbliss.com"
+           class="btn btn-primary">
+            Place an Order
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+
+    <div class="footer-grid">
+
+        <div>
+            <h3>SweetBliss 🍩</h3>
+
+            <p>
+                Premium macarons, cookies and donuts
+                handcrafted fresh every day.
+            </p>
+
+            <p>Made with ❤️ in Pune.</p>
+        </div>
+
+        <div>
+            <h3>Explore</h3>
+
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#shop">Shop</a></li>
+                <li><a href="#story">Our Story</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h3>Shop</h3>
+
+            <ul>
+                <li><a href="#shop">Macarons</a></li>
+                <li><a href="#shop">Cookies</a></li>
+                <li><a href="#shop">Donuts</a></li>
+                <li><a href="#shop">Gift Boxes</a></li>
+            </ul>
+        </div>
+
+        <div>
+            <h3>Follow Us</h3>
+
+            <p>📸 Instagram</p>
+            <p>📘 Facebook</p>
+            <p>🎵 TikTok</p>
+            <p>📱 WhatsApp</p>
+        </div>
+
+    </div>
+
+    <div class="copyright">
+        © 2026 Sweet Bliss Bakery • Made with love & sugar 🍪
+    </div>
+
+</footer>
+
+</body>
+</html>
+```
