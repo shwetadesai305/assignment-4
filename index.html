@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Climate Observation | Planet Data & Insights</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            color: #102a43;
+            background: #f5f9f7;
+            line-height: 1.6;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 10;
+            background: rgba(3, 27, 45, 0.92);
+        }
+
+        nav {
+            max-width: 1250px;
+            margin: auto;
+            height: 78px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 25px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            font-size: 23px;
+            font-weight: 800;
+        }
+
+        .logo-icon {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #27ae60, #55efc4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+        }
+
+        .logo span {
+            color: #2ecc71;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #2ecc71;
+        }
+
+        .search {
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 8px;
+            padding: 10px 15px;
+            color: white;
+            background: rgba(255,255,255,0.05);
+            outline: none;
+            width: 190px;
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            min-height: 650px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            background:
+                linear-gradient(90deg, rgba(3,31,49,0.90), rgba(3,31,49,0.45)),
+                url("https://images.unsplash.com/photo-1469474968028-56623f02e42e?auto=format&fit=crop&w=2000&q=90")
+                center/cover no-repeat;
+        }
+
+        .hero-content {
+            max-width: 1250px;
+            width: 100%;
+            margin: auto;
+            padding: 110px 25px 50px;
+            display: grid;
+            grid-template-columns: 1fr 480px;
+            gap: 60px;
+            align-items: center;
+        }
+
+        .hero-text {
+            color: white;
+        }
+
+        .hero-text h1 {
+            font-size: 56px;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            font-weight: 800;
+        }
+
+        .hero-text h1 span {
+            color: #2ecc71;
+        }
+
+        .hero-text p {
+            max-width: 600px;
+            font-size: 18px;
+            color: #e2edf3;
+            margin-bottom: 35px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 18px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 25px;
+            border-radius: 7px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .btn-primary {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #219653;
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            border: 1px solid white;
+            color: white;
+        }
+
+        .btn-outline:hover {
+            background: white;
+            color: #12344d;
+        }
+
+        /* ================= DATA PANEL ================= */
+
+        .data-panel {
+            background: rgba(4, 37, 59, 0.88);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            padding: 25px;
+            color: white;
+            border: 1px solid rgba(255,255,255,0.15);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+        }
+
+        .data-panel h2 {
+            font-size: 20px;
+            margin-bottom: 18px;
+        }
+
+        .live {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background: #2ecc71;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .metric {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 18px 0;
+            border-top: 1px solid rgba(255,255,255,0.15);
+        }
+
+        .metric-name {
+            color: #dce9ef;
+        }
+
+        .metric-value {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .metric small {
+            display: block;
+            color: #9eb4c3;
+            font-size: 11px;
+        }
+
+        /* ================= FEATURES ================= */
+
+        .features {
+            max-width: 1250px;
+            margin: -40px auto 0;
+            position: relative;
+            z-index: 2;
+            padding: 0 25px;
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 27px;
+            border-radius: 14px;
+            box-shadow: 0 10px 30px rgba(16,42,67,0.08);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: #e7f8ed;
+            color: #27ae60;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            margin-bottom: 15px;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 8px;
+            font-size: 18px;
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: #627d98;
+        }
+
+        /* ================= SECTION ================= */
+
+        .section {
+            max-width: 1250px;
+            margin: auto;
+            padding: 80px 25px;
+        }
+
+        .section-title {
+            margin-bottom: 40px;
+        }
+
+        .section-title h2 {
+            font-size: 32px;
+            margin-bottom: 8px;
+        }
+
+        .section-title p {
+            color: #627d98;
+        }
+
+        /* ================= TOPICS ================= */
+
+        .topics {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .topic-card {
+            min-height: 180px;
+            border-radius: 15px;
+            padding: 30px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            overflow: hidden;
+            position: relative;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .topic-card::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+        }
+
+        .topic-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .topic-card h3 {
+            font-size: 21px;
+            margin-bottom: 4px;
+        }
+
+        .temperature {
+            background-image:
+                url("https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=900&q=80");
+        }
+
+        .ocean {
+            background-image:
+                url("https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=900&q=80");
+        }
+
+        .forest {
+            background-image:
+                url("https://images.unsplash.com/photo-1448375240586-882707db888b?auto=format&fit=crop&w=900&q=80");
+        }
+
+        /* ================= INSIGHTS ================= */
+
+        .insights {
+            background: white;
+        }
+
+        .insight-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .insight-card {
+            background: #f5f9f7;
+            border-radius: 15px;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+
+        .insight-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+        }
+
+        .insight-image {
+            height: 220px;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .insight-content {
+            padding: 25px;
+        }
+
+        .tag {
+            color: #27ae60;
+            font-size: 12px;
+            font-weight: 700;
+            text-transform: uppercase;
+        }
+
+        .insight-content h3 {
+            font-size: 21px;
+            margin: 8px 0;
+        }
+
+        .insight-content p {
+            color: #627d98;
+            font-size: 14px;
+        }
+
+        /* ================= CALL TO ACTION ================= */
+
+        .cta {
+            background:
+                linear-gradient(90deg, rgba(3,39,57,0.95), rgba(3,39,57,0.75)),
+                url("https://images.unsplash.com/photo-1534088568595-a066f410bcda?auto=format&fit=crop&w=1800&q=90")
+                center/cover;
+            color: white;
+            text-align: center;
+            padding: 90px 20px;
+        }
+
+        .cta h2 {
+            font-size: 38px;
+            margin-bottom: 15px;
+        }
+
+        .cta p {
+            max-width: 650px;
+            margin: 0 auto 30px;
+            color: #dce9ef;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            background: #031b2d;
+            color: #c4d4dd;
+            padding: 55px 25px 25px;
+        }
+
+        .footer-grid {
+            max-width: 1250px;
+            margin: auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 50px;
+        }
+
+        footer h3 {
+            color: white;
+            margin-bottom: 18px;
+        }
+
+        footer p {
+            font-size: 14px;
+            color: #91a8b5;
+            max-width: 350px;
+        }
+
+        footer ul {
+            list-style: none;
+        }
+
+        footer li {
+            margin-bottom: 10px;
+        }
+
+        footer a {
+            color: #91a8b5;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        footer a:hover {
+            color: #2ecc71;
+        }
+
+        .copyright {
+            max-width: 1250px;
+            margin: 40px auto 0;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            font-size: 13px;
+            text-align: center;
+            color: #718896;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 1000px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .hero-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-text h1 {
+                font-size: 45px;
+            }
+
+            .features {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .topics {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            .search {
+                display: none;
+            }
+
+            .hero {
+                min-height: auto;
+            }
+
+            .hero-content {
+                padding-top: 130px;
+                padding-bottom: 70px;
+            }
+
+            .hero-text h1 {
+                font-size: 36px;
+            }
+
+            .hero-text p {
+                font-size: 16px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+            }
+
+            .features {
+                grid-template-columns: 1fr;
+                margin-top: -20px;
+            }
+
+            .topics {
+                grid-template-columns: 1fr;
+            }
+
+            .insight-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .data-panel {
+                padding: 18px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- ================= NAVIGATION ================= -->
+
+<header>
+    <nav>
+
+        <div class="logo">
+            <div class="logo-icon">🌍</div>
+            Climate <span>Observation</span>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="#">Home</a></li>
+            <li><a href="#about">About</a></li>
+            <li><a href="#data">Data</a></li>
+            <li><a href="#dashboard">Dashboard</a></li>
+            <li><a href="#reports">Reports</a></li>
+            <li><a href="#news">News</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+
+        <input
+            class="search"
+            type="text"
+            placeholder="Search climate data..."
+        >
+
+    </nav>
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <div class="hero-text">
+
+            <h1>
+                Observing Today,
+                <br>
+                <span>Protecting Tomorrow</span>
+            </h1>
+
+            <p>
+                Climate Observation collects, analyzes and shares
+                reliable climate data to help scientists, communities
+                and policymakers understand our changing planet.
+            </p>
+
+            <div class="buttons">
+                <a href="#dashboard" class="btn btn-primary">
+                    📊 Explore Dashboard
+                </a>
+
+                <a href="#about" class="btn btn-outline">
+                    ℹ Learn More
+                </a>
+            </div>
+
+        </div>
+
+
+        <!-- LIVE DATA -->
+
+        <div class="data-panel">
+
+            <h2>
+                <span class="live"></span>
+                Real-Time Climate Overview
+            </h2>
+
+            <div class="metric">
+                <div class="metric-name">
+                    🌡️ Global Temperature
+                </div>
+
+                <div>
+                    <div class="metric-value">1.18°C</div>
+                    <small>above pre-industrial levels</small>
+                </div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-name">
+                    ☁️ CO₂ Concentration
+                </div>
+
+                <div>
+                    <div class="metric-value">422.45 ppm</div>
+                    <small>atmospheric average</small>
+                </div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-name">
+                    🌊 Sea Level Rise
+                </div>
+
+                <div>
+                    <div class="metric-value">3.62 mm/yr</div>
+                    <small>global average</small>
+                </div>
+            </div>
+
+            <div class="metric">
+                <div class="metric-name">
+                    ❄️ Arctic Ice
+                </div>
+
+                <div>
+                    <div class="metric-value">12.46M km²</div>
+                    <small>current extent</small>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FEATURES ================= -->
+
+<section class="features" id="about">
+
+    <div class="feature-card">
+
+        <div class="feature-icon">📊</div>
+
+        <h3>Live Data</h3>
+
+        <p>
+            Access climate observations and environmental
+            measurements from monitoring systems worldwide.
+        </p>
+
+    </div>
+
+
+    <div class="feature-card">
+
+        <div class="feature-icon">🌎</div>
+
+        <h3>Global Coverage</h3>
+
+        <p>
+            Explore climate information collected from
+            thousands of stations across the planet.
+        </p>
+
+    </div>
+
+
+    <div class="feature-card">
+
+        <div class="feature-icon">🛡️</div>
+
+        <h3>Reliable Data</h3>
+
+        <p>
+            High-quality climate datasets supporting
+            research, policy and environmental decisions.
+        </p>
+
+    </div>
+
+
+    <div class="feature-card">
+
+        <div class="feature-icon">👥</div>
+
+        <h3>Community Driven</h3>
+
+        <p>
+            Connecting scientists, researchers and
+            communities to create climate solutions.
+        </p>
+
+    </div>
+
+</section>
+
+
+<!-- ================= DATA TOPICS ================= -->
+
+<section class="section" id="data">
+
+    <div class="section-title">
+
+        <h2>Explore Climate Data</h2>
+
+        <p>
+            Discover environmental observations across
+            multiple climate indicators.
+        </p>
+
+    </div>
+
+
+    <div class="topics">
+
+        <div class="topic-card temperature">
+
+            <div class="topic-content">
+                <h3>🌡️ Temperature</h3>
+                <p>Global temperature observations</p>
+            </div>
+
+        </div>
+
+
+        <div class="topic-card ocean">
+
+            <div class="topic-content">
+                <h3>🌊 Oceans & Sea Level</h3>
+                <p>Ocean conditions and sea level trends</p>
+            </div>
+
+        </div>
+
+
+        <div class="topic-card forest">
+
+            <div class="topic-content">
+                <h3>🌳 Ecosystems</h3>
+                <p>Forest and ecosystem observations</p>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= INSIGHTS ================= -->
+
+<section class="insights" id="news">
+
+    <div class="section">
+
+        <div class="section-title">
+
+            <h2>Latest Climate Insights</h2>
+
+            <p>
+                Research, observations and important climate updates.
+            </p>
+
+        </div>
+
+
+        <div class="insight-grid">
+
+            <article class="insight-card">
+
+                <img
+                    class="insight-image"
+                    src="https://images.unsplash.com/photo-1483347756197-71ef80e95f73?auto=format&fit=crop&w=1000&q=85"
+                    alt="Glacier and mountains"
+                >
+
+                <div class="insight-content">
+
+                    <div class="tag">Climate Report</div>
+
+                    <h3>
+                        Monitoring Earth's Changing Climate
+                    </h3>
+
+                    <p>
+                        Scientists use long-term observations to
+                        understand temperature, precipitation,
+                        glaciers and ecosystem changes.
+                    </p>
+
+                </div>
+
+            </article>
+
+
+            <article class="insight-card">
+
+                <img
+                    class="insight-image"
+                    src="https://images.unsplash.com/photo-1473445361085-b9a07f55608b?auto=format&fit=crop&w=1000&q=85"
+                    alt="Green forest"
+                >
+
+                <div class="insight-content">
+
+                    <div class="tag">Environment</div>
+
+                    <h3>
+                        Protecting Forest Ecosystems
+                    </h3>
+
+                    <p>
+                        Healthy forests play an important role in
+                        carbon storage, biodiversity and climate
+                        resilience.
+                    </p>
+
+                </div>
+
+            </article>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- ================= CTA ================= -->
+
+<section class="cta" id="dashboard">
+
+    <h2>Understand the Climate. Shape the Future.</h2>
+
+    <p>
+        Explore environmental observations, discover climate
+        trends and learn how data can help create a more
+        sustainable future.
+    </p>
+
+    <a href="#data" class="btn btn-primary">
+        Explore Climate Data
+    </a>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer id="contact">
+
+    <div class="footer-grid">
+
+        <div>
+
+            <h3>🌍 Climate Observation</h3>
+
+            <p>
+                Reliable climate information for researchers,
+                communities and decision makers working toward
+                a sustainable planet.
+            </p>
+
+        </div>
+
+
+        <div>
+
+            <h3>Explore</h3>
+
+            <ul>
+                <li><a href="#">Climate Data</a></li>
+                <li><a href="#">Dashboard</a></li>
+                <li><a href="#">Reports</a></li>
+                <li><a href="#">Research</a></li>
+            </ul>
+
+        </div>
+
+
+        <div>
+
+            <h3>Resources</h3>
+
+            <ul>
+                <li><a href="#">Climate Trends</a></li>
+                <li><a href="#">Data Sources</a></li>
+                <li><a href="#">Publications</a></li>
+                <li><a href="#">FAQs</a></li>
+            </ul>
+
+        </div>
+
+
+        <div>
+
+            <h3>Connect</h3>
+
+            <ul>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">Newsletter</a></li>
+                <li><a href="#">Community</a></li>
+            </ul>
+
+        </div>
+
+    </div>
+
+
+    <div class="copyright">
+        © 2026 Climate Observation. All rights reserved.
+    </div>
+
+</footer>
+
+</body>
+</html>
